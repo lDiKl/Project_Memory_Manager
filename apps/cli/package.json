@@ -33,11 +33,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "dist",
-    "templates",
-    "scripts"
-  ],
+  "files": ["dist", "templates", "scripts"],
   "scripts": {
     "build": "tsup",
     "dev": "tsx src/index.ts",

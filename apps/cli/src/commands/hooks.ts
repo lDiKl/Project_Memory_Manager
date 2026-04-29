@@ -1,6 +1,6 @@
-import { existsSync, readFileSync, lstatSync, writeFileSync, unlinkSync } from 'node:fs';
+import { existsSync, lstatSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { findProjectRoot, PmemError } from '@pmem/core';
+import { PmemError, findProjectRoot } from '@pmem/core';
 import type { Command } from 'commander';
 import { ui } from '../ui.js';
 
@@ -72,7 +72,10 @@ function removeHook(gitDir: string): void {
   }
   const endIdx = content.indexOf(HOOK_MARKER_END);
   if (endIdx === -1) {
-    throw new PmemError('E_HOOK_CORRUPTED', 'pre-commit hook contains PMEM start marker but no end marker. Please inspect manually.');
+    throw new PmemError(
+      'E_HOOK_CORRUPTED',
+      'pre-commit hook contains PMEM start marker but no end marker. Please inspect manually.',
+    );
   }
   const before = content.slice(0, startIdx);
   const after = content.slice(endIdx + HOOK_MARKER_END.length);
@@ -137,9 +140,8 @@ async function runInstall(opts: HooksOptions): Promise<void> {
 
   const existing = readHook(gitDir);
   const hookScript = generateHookScript();
-  const newContent = existing.length > 0
-    ? `${existing.trimEnd()}\n\n${hookScript}`
-    : `#!/bin/sh\n\n${hookScript}`;
+  const newContent =
+    existing.length > 0 ? `${existing.trimEnd()}\n\n${hookScript}` : `#!/bin/sh\n\n${hookScript}`;
 
   writeHook(gitDir, newContent);
   ui.success('Installed PMEM pre-commit hook.');

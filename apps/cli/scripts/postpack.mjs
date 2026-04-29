@@ -1,15 +1,14 @@
 #!/usr/bin/env node
+import { existsSync, renameSync } from 'node:fs';
+import { rm } from 'node:fs/promises';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 /**
  * POST-PUBLISH CLEANUP
  *
  * Restores apps/cli/package.json from the backup created by prepack.mjs.
  */
-import { rm } from 'node:fs/promises';
-import { renameSync } from 'node:fs';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const cliRoot = join(__dirname, '..');
 const pkgPath = join(cliRoot, 'package.json');

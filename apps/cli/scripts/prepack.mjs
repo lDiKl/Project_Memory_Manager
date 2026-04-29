@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+import { execSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { dirname, join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 /**
  * PREPARE FOR PUBLISH
  *
@@ -12,12 +18,6 @@
  * After running this, cd apps/cli && npm publish
  * Then run postpack.mjs to restore.
  */
-import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { execSync } from 'node:child_process';
-
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const cliRoot = join(__dirname, '..');
 const repoRoot = join(cliRoot, '..', '..');
@@ -45,7 +45,7 @@ async function vendorPackage(pkgDirName) {
   await removeTestBuildArtifacts(destDir);
 
   const pkg = JSON.parse(await readFile(srcPkg, 'utf-8'));
-  await writeFile(join(destDir, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
+  await writeFile(join(destDir, 'package.json'), `${JSON.stringify(pkg, null, 2)}\n`);
   console.log(`[prepack] Vendored @pmem/${pkgDirName} → dist/@pmem/${pkgDirName}/`);
 }
 
@@ -73,9 +73,18 @@ async function rewriteImports(dir) {
 
       const orig = content;
       content = content.replaceAll(`from "@pmem/core"`, `from "${prefix}@pmem/core/index.js"`);
-      content = content.replaceAll(`import("@pmem/core")`, `import("${prefix}@pmem/core/index.js")`);
-      content = content.replaceAll(`from "@pmem/shared-types"`, `from "${prefix}@pmem/shared-types/index.js"`);
-      content = content.replaceAll(`import("@pmem/shared-types")`, `import("${prefix}@pmem/shared-types/index.js")`);
+      content = content.replaceAll(
+        `import("@pmem/core")`,
+        `import("${prefix}@pmem/core/index.js")`,
+      );
+      content = content.replaceAll(
+        `from "@pmem/shared-types"`,
+        `from "${prefix}@pmem/shared-types/index.js"`,
+      );
+      content = content.replaceAll(
+        `import("@pmem/shared-types")`,
+        `import("${prefix}@pmem/shared-types/index.js")`,
+      );
 
       if (content !== orig) {
         await writeFile(path, content);
@@ -99,12 +108,12 @@ async function patchPackageJson() {
   const pkg = JSON.parse(await readFile(pkgPath, 'utf-8'));
 
   // backup
-  await writeFile(backupPath, JSON.stringify(pkg, null, 2) + '\n');
+  await writeFile(backupPath, `${JSON.stringify(pkg, null, 2)}\n`);
 
-  delete pkg.dependencies['@pmem/core'];
-  delete pkg.dependencies['@pmem/shared-types'];
+  pkg.dependencies['@pmem/core'] = undefined;
+  pkg.dependencies['@pmem/shared-types'] = undefined;
 
-  await writeFile(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
+  await writeFile(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
   console.log('[prepack] Removed workspace deps from package.json');
   console.log('[prepack] Backup saved to package.json.bak');
 }
