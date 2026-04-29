@@ -42,10 +42,22 @@ async function vendorPackage(pkgDirName) {
   for (const entry of await readdir(srcDist, { withFileTypes: true })) {
     await cp(join(srcDist, entry.name), join(destDir, entry.name), { recursive: true });
   }
+  await removeTestBuildArtifacts(destDir);
 
   const pkg = JSON.parse(await readFile(srcPkg, 'utf-8'));
   await writeFile(join(destDir, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
   console.log(`[prepack] Vendored @pmem/${pkgDirName} → dist/@pmem/${pkgDirName}/`);
+}
+
+async function removeTestBuildArtifacts(dir) {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      await removeTestBuildArtifacts(path);
+    } else if (entry.name.includes('.test.')) {
+      await rm(path, { force: true });
+    }
+  }
 }
 
 async function rewriteImports(dir) {

@@ -4,8 +4,34 @@
   "description": "Git-native project memory and documentation drift tracker.",
   "license": "MIT",
   "type": "module",
+  "homepage": "https://github.com/lDiKl/Project_Memory_Manager#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lDiKl/Project_Memory_Manager.git",
+    "directory": "apps/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/lDiKl/Project_Memory_Manager/issues"
+  },
+  "keywords": [
+    "documentation",
+    "docs",
+    "git",
+    "cli",
+    "mcp",
+    "ai",
+    "llm",
+    "context",
+    "project-memory"
+  ],
+  "engines": {
+    "node": ">=20.10.0"
+  },
   "bin": {
     "pmem": "./dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "dist",
