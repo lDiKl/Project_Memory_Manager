@@ -1,0 +1,11 @@
+services:
+  pmem:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: project-memory-manager:local
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      CI: "1"

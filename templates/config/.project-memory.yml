@@ -1,0 +1,34 @@
+# Project Memory Manager configuration
+# https://github.com/<owner>/project-memory-manager
+
+version: 1
+
+project:
+  name: {{project_name}}
+  docs_root: docs
+  default_branch: main
+
+records:
+  task_prefix: TASK
+  bug_prefix: BUG
+  adr_prefix: ADR
+
+paths:
+  docs_map: docs-map.yml
+  templates: templates
+
+features:
+  web_ui: false
+  ai: false
+  cloud_sync: false
+
+checks:
+  warn_on_missing_docs_update: true
+  block_commit: false
+  require_docs_impact_section: true
+  ignore:
+    - .git/**
+    - node_modules/**
+    - dist/**
+    - build/**
+    - coverage/**

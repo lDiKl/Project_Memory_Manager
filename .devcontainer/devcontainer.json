@@ -1,0 +1,58 @@
+{
+  "name": "Project Memory Manager",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/project-memory-manager,type=bind,consistency=cached",
+  "workspaceFolder": "/workspaces/project-memory-manager",
+  "postCreateCommand": "pnpm install --frozen-lockfile",
+  "remoteUser": "node",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "biomejs.biome",
+        "redhat.vscode-yaml",
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint",
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome",
+        "[typescript]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[javascriptreact]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "files.eol": "\n",
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "explorer.fileNesting.enabled": true,
+        "explorer.fileNesting.patterns": {
+          "*.ts": "${capture}.test.ts, ${capture}.spec.ts, ${capture}.d.ts",
+          "tsconfig.json": "tsconfig.*.json",
+          "package.json": "package-lock.json, pnpm-lock.yaml, .npmrc, .nvmrc"
+        }
+      }
+    }
+  }
+}

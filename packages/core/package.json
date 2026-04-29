@@ -1,0 +1,37 @@
+{
+  "name": "@pmem/core",
+  "version": "1.0.0",
+  "description": "PMEM domain logic: scanner, checker, records, docs engine.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome check src"
+  },
+  "dependencies": {
+    "@pmem/shared-types": "workspace:*",
+    "glob": "^11.0.0",
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0",
+    "micromatch": "^4.0.8",
+    "simple-git": "^3.27.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/micromatch": "^4.0.9"
+  }
+}

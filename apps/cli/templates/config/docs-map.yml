@@ -1,0 +1,10 @@
+# Maps source code paths to documentation paths.
+# Run `pmem scan --write` to auto-detect modules.
+
+modules:
+  example:
+    description: Example module mapping. Replace or remove after `pmem scan`.
+    code:
+      - src/example/**
+    docs:
+      - docs/modules/example/overview.md
