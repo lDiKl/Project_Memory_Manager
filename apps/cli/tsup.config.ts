@@ -19,7 +19,7 @@ export default defineConfig({
     'src/mcp/handlers.ts',
   ],
   format: ['esm'],
-  target: 'node20',
+  target: 'node24',
   clean: true,
   sourcemap: false,
   shims: true,

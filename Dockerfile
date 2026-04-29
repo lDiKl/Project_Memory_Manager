@@ -1,5 +1,5 @@
 # Runtime image for the public PMM CLI.
-FROM node:20-bookworm-slim AS deps
+FROM node:24-bookworm-slim AS deps
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ COPY . .
 
 RUN pnpm build
 
-FROM node:20-bookworm-slim AS runtime
+FROM node:24-bookworm-slim AS runtime
 
 WORKDIR /workspace
 

@@ -15,7 +15,7 @@ PMM stores everything as plain Markdown and YAML inside your repository. No data
 npm install -g project-memory-manager
 ```
 
-Requires Node.js 20.10+ and pnpm 9+ for local development.
+Requires Node.js 24+ and pnpm 10+ for local development.
 
 ## Docker
 
